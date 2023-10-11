@@ -43,6 +43,7 @@ values (70148900, 'Product description 0001', 191116, 'Category 01'),
 ------------------------------------------------------------------------------------------------------------------------
 create table Price
 (
+    id serial,
     chain_name             varchar(255),
     material_no            bigint references Product (material_no),
     regular_price_per_unit decimal(10, 2)
