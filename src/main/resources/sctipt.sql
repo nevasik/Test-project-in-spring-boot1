@@ -43,7 +43,7 @@ values (70148900, 'Product description 0001', 191116, 'Category 01'),
 ------------------------------------------------------------------------------------------------------------------------
 create table Price
 (
-    id serial,
+    id                     serial,
     chain_name             varchar(255),
     material_no            bigint references Product (material_no),
     regular_price_per_unit decimal(10, 2)
@@ -65,6 +65,7 @@ VALUES ('Chain 1', 70148900, 93.79),
 ------------------------------------------------------------------------------------------------------------------------
 create table Actuals
 (
+    actuals_id         serial primary key,
     date               date,
     material_no        bigint references Product (material_no),
     ship_to_code       bigint references Сustomer (ship_to_code),

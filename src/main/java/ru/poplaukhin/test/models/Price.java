@@ -23,7 +23,7 @@ public class Price {
     private Long materialNo;
 
     @Column(name = "regular_price_per_unit")
-    private BigDecimal regularPricePerUnit;
+    private double regularPricePerUnit;
 
     public Price() {
     }
@@ -52,11 +52,11 @@ public class Price {
         this.materialNo = materialNo;
     }
 
-    public BigDecimal getRegularPricePerUnit() {
+    public double getRegularPricePerUnit() {
         return regularPricePerUnit;
     }
 
-    public void setRegularPricePerUnit(BigDecimal regularPricePerUnit) {
+    public void setRegularPricePerUnit(double regularPricePerUnit) {
         this.regularPricePerUnit = regularPricePerUnit;
     }
 }
