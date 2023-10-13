@@ -29,11 +29,11 @@ public class ActualsController {
         return ResponseEntity.ok(actuals);
     }
 
-    @GetMapping("/daily-sales")
-    public ResponseEntity<List<Actuals>> getDailySales(@RequestParam List<String> volumeNames,
-                                                          @RequestParam List<String> productNames) {
-
-        List<Actuals> result = service.getDailySales(volumeNames, productNames);
-        return ResponseEntity.ok(result);
-    }
+//    @GetMapping("/daily-sales")
+//    public ResponseEntity<List<Actuals>> getDailySales(@RequestParam List<String> volumeNames,
+//                                                          @RequestParam List<String> productNames) {
+//
+//        List<Actuals> result = service.getDailySales(volumeNames, productNames);
+//        return ResponseEntity.ok(result);
+//    }
 }

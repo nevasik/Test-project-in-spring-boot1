@@ -38,7 +38,7 @@ public class ActualsService {
         for (Actuals actuals : actualsList) {
             Product product = productRepository.findById(actuals.getProduct().getMaterialNo()).orElse(null);
             Customer customer = customerRepository.findById(actuals.getCustomer().getShipToCode()).orElse(null);
-            Price price = priceRepository.findByChainNameAndProduct(actuals.getVolume(), product);
+            Price price = priceRepository.findByChainNameAndRegularPricePerUnit(actuals.getVolume(), product.getMaterialNo());
 
             if (product != null && customer != null && price != null) {
                 Actuals result = new Actuals();
