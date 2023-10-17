@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.poplaukhin.test.dto.Unloading;
 import ru.poplaukhin.test.models.*;
 import ru.poplaukhin.test.repositories.ActualsRepository;
 import ru.poplaukhin.test.repositories.CustomerRepository;
@@ -11,8 +12,11 @@ import ru.poplaukhin.test.repositories.PriceRepository;
 import ru.poplaukhin.test.repositories.ProductRepository;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.*;
 
 @Service
 public class ActualsService {
@@ -30,6 +34,7 @@ public class ActualsService {
         this.productRepository = productRepository;
     }
 
+    // promo or regular record
     public List<Actuals> calcColumPromoSign() {
         log.info("Calculate column promo sign");
 
@@ -39,7 +44,7 @@ public class ActualsService {
         for (Actuals actual : actuals) {
             for (Price price : prices) {
                 if (actual.getProduct().equals(price.getMaterialNo())) {
-                    if ((actual.getActualSalesValue() / actual.getUnits()) < price.getRegularPricePerUnit()) {
+                    if ((actual.getActualSalesValue() / actual.getUnits()) > price.getRegularPricePerUnit()) {
                         log.info(String.valueOf(actual));
                         actual.setPromoSign("Promo");
                         actualsRepository.save(actual);
@@ -55,22 +60,67 @@ public class ActualsService {
         return actuals;
     }
 
-    public List<Actuals> calcSalesWithPromo() {
+    public List<Unloading> uploadingSalesPromo() {
         log.info("Calculate sales with promo in service actuals");
 
-        List<Actuals> result = new ArrayList<>();
+        List<Unloading> result = new ArrayList<>();
 
-        // sales data
-        List<Actuals> all = actualsRepository.findAll();
+        List<Actuals> actuals = actualsRepository.findAll();
+        List<Customer> customers = customerRepository.findAll();
 
-        for (Actuals actuals : all) {
+        double promoValueSum = 0;
+        double regularValueSum = 0;
+        double promoUnitsSum = 0;
+        double regularUnitsSum = 0;
 
+        for (Actuals actual : actuals) {
+            if (actual.getPromoSign().equals("Promo")) {
+                promoValueSum += actual.getActualSalesValue();
+                promoUnitsSum += actual.getUnits();
+            } else {
+                regularValueSum += actual.getActualSalesValue();
+                regularUnitsSum += actual.getUnits();
+            }
         }
 
-        return null;
+        log.info(String.valueOf(promoValueSum));
+        log.info(String.valueOf(regularValueSum));
+        log.info(String.valueOf(promoUnitsSum));
+        log.info(String.valueOf(regularUnitsSum));
+
+        for (Actuals actual : actuals) { // the speed is lame, I'll fix it when I have time
+            for (Customer customer : customers) {
+
+                if (actual.getCustomer().getShipToCode().equals(customer.getShipToCode())) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(actual.getDate());
+                    int month = calendar.get(Calendar.MONTH) + 1; // added 1 because months in the calendar start from 0
+                    log.info(String.valueOf(month));
+
+                    Unloading unloadingResult = new Unloading(customer.getChainName(), actual.getProduct().getProductCategoryCode(),
+                            month, (((regularValueSum / regularUnitsSum) * 100.0) / 100.0), (((promoValueSum / promoUnitsSum) * 100.0) / 100.0), 0);
+
+                    if (actual.getPromoSign().equals("Promo")) {
+                        double procentRes = actual.getUnits() / actual.getActualSalesValue() * 100;
+                        double roundedValue = Math.round(procentRes * 100.0) / 100.0; // to round to 2 decimal places
+
+                        log.info(String.valueOf(roundedValue));
+
+                        unloadingResult.setProcentResult(roundedValue);
+                        unloadingResult.setRegularFact(0); // because promo price, then regular 0
+                    } else {
+                        unloadingResult.setPromoFact(0); // everything is the other way around here
+                    }
+
+                    result.add(unloadingResult);
+                }
+            }
+        }
+
+        return result;
     }
 
-    public List<Actuals> getDailySales(List<String> volumeNames, List<String> productNames) {
-        return null;
+    public List<Actuals> getDailySales() {
+
     }
 }

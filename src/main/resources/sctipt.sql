@@ -75,7 +75,7 @@ create table Actuals
     promo_sign         varchar
 );
 
-insert into Actuals(actuals_id ,date, material_no, ship_to_code, volume, units, actual_sales_value)
+insert into Actuals(actuals_id, date, material_no, ship_to_code, volume, units, actual_sales_value)
 values (1, '2021-02-25', 70148900, 5517876, 'Chain 1', 24, 2250.96),
        (2, '2021-03-25', 70163200, 5528923, 'Chain 1', 12, 1125.48),
        (3, '2021-04-15', 70168300, 5520897, 'Chain 1', 12, 1125.48),
@@ -85,7 +85,14 @@ values (1, '2021-02-25', 70148900, 5517876, 'Chain 1', 24, 2250.96),
        (7, '2021-01-21', 70211500, 5527651, 'Chain 1', 8208, 149385.6),
        (8, '2021-01-30', 70240301, 5471687, 'Chain 1', 3168, 57657.6);
 
-select * from actuals;
-select * from price;
-select * from product;
-select * from customer;
+select *
+from actuals;
+
+select *
+from price;
+
+select *
+from product;
+
+select *
+from customer;

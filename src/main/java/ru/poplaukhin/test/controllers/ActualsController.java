@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ru.poplaukhin.test.dto.Unloading;
 import ru.poplaukhin.test.models.Actuals;
 import ru.poplaukhin.test.services.ActualsService;
 
@@ -29,8 +30,15 @@ public class ActualsController {
     }
 
     @GetMapping("/sales-with-promo")
-    public ResponseEntity<List<Actuals>> getSalesWithPromo() {
-        List<Actuals> actuals = service.calcSalesWithPromo();
+    public ResponseEntity<List<Unloading>> uploadingSalesFactsPromo() {
+        List<Unloading> actuals = service.uploadingSalesPromo();
+
+        return ResponseEntity.ok(actuals);
+    }
+
+    @GetMapping("/uploading facts")
+    public ResponseEntity<List<Unloading>> uploadingFacts() {
+        List<Unloading> actuals = service.getDailySales();
 
         return ResponseEntity.ok(actuals);
     }
