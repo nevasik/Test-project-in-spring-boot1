@@ -11,7 +11,4 @@ import java.util.List;
 
 @Repository
 public interface PriceRepository extends JpaRepository<Price, Long> {
-    // найти цену по названию сети и продукту
-//    Price findByChainNameAndPrice(String chainName, Product product);
-    Price findByChainNameAndRegularPricePerUnit(String chainName, double regularPricePerUnit);
 }

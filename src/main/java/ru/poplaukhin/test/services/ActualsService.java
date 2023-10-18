@@ -11,11 +11,6 @@ import ru.poplaukhin.test.repositories.CustomerRepository;
 import ru.poplaukhin.test.repositories.PriceRepository;
 import ru.poplaukhin.test.repositories.ProductRepository;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.*;
 
 @Service
@@ -120,7 +115,34 @@ public class ActualsService {
         return result;
     }
 
-    public List<Actuals> getDailySales() {
+    public List<List<Actuals>> getDailySales(String chainName, String productCategoryName) {
+        List<Customer> byChainName = customerRepository.findByChainName(chainName);
+        List<Product> byProductCategoryName = productRepository.findByProductCategoryName(productCategoryName);
 
+        List<List<Actuals>> result = new ArrayList<>();
+
+        if (byChainName.size() <= byProductCategoryName.size()) {
+            for (Customer customer : byChainName) {
+                for (Product product : byProductCategoryName) {
+                    result.add(actualsRepository.findActualsByProductAndCustomer(product, customer));
+                }
+            }
+        } else {
+            for (Product product : byProductCategoryName) {
+                for (Customer customer : byChainName) {
+                    result.add(actualsRepository.findActualsByProductAndCustomer(product, customer));
+                }
+            }
+        }
+
+        return result;
     }
+
+//    public Optional<Customer> getCustomerByChainName(String chainName) {
+//        return customerRepository.findByChainName(chainName);
+//    }
+//
+//    public Optional<Product> getProductByCategoryName(String productCategoryName) {
+//        return productRepository.findByProductCategoryName(productCategoryName);
+//    }
 }

@@ -3,14 +3,19 @@ package ru.poplaukhin.test.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.poplaukhin.test.dto.Unloading;
 import ru.poplaukhin.test.models.Actuals;
+import ru.poplaukhin.test.models.Customer;
+import ru.poplaukhin.test.models.Price;
+import ru.poplaukhin.test.models.Product;
 import ru.poplaukhin.test.services.ActualsService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/actuals")
@@ -36,9 +41,11 @@ public class ActualsController {
         return ResponseEntity.ok(actuals);
     }
 
-    @GetMapping("/uploading facts")
-    public ResponseEntity<List<Unloading>> uploadingFacts() {
-        List<Unloading> actuals = service.getDailySales();
+    @GetMapping("/uploading-facts/{chainName}/{productCategoryName}")
+    public ResponseEntity<List<List<Actuals>>> uploadingFacts(@PathVariable String chainName, // Customer
+                                                          @PathVariable String productCategoryName) { // Product
+
+        List<List<Actuals>> actuals = service.getDailySales(chainName, productCategoryName);
 
         return ResponseEntity.ok(actuals);
     }

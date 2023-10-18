@@ -10,5 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ActualsRepository extends JpaRepository<Actuals, Long> {
+//    List<Actuals> findActualsByIdProductAndCustomer(Product product, Customer customer);
     List<Actuals> findActualsByProductAndCustomer(Product product, Customer customer);
 }

@@ -43,14 +43,10 @@ public class PriceService {
         return prices;
     }
 
-    public Price update(Long id, Price newPrice) {
-        Optional<Price> priceUpdate = repository.findById(id);
+    public Price update(Price newPrice) {
+        repository.save(newPrice);
 
-        log.info("Update Price " + priceUpdate.orElse(null));
-
-        priceUpdate.get().setChainName(newPrice.getChainName());
-        priceUpdate.get().setMaterialNo(newPrice.getMaterialNo());
-        priceUpdate.get().setRegularPricePerUnit(newPrice.getRegularPricePerUnit());
+        log.info("Update Price " + newPrice);
 
         return newPrice;
     }

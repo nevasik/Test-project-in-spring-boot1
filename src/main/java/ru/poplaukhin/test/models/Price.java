@@ -2,16 +2,19 @@ package ru.poplaukhin.test.models;
 
 import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
-import java.math.BigDecimal;
+
 
 @Entity
 @Table(name = "price")
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
 
 public class Price {
@@ -30,22 +33,6 @@ public class Price {
     private double regularPricePerUnit;
 
     public Price() {
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setChainName(String chainName) {
-        this.chainName = chainName;
-    }
-
-    public void setMaterialNo(Product materialNo) {
-        this.materialNo = materialNo;
-    }
-
-    public void setRegularPricePerUnit(double regularPricePerUnit) {
-        this.regularPricePerUnit = regularPricePerUnit;
     }
 }
 
