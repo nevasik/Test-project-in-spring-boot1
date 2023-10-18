@@ -1,5 +1,6 @@
 package ru.poplaukhin.test.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,7 @@ public class CustomerController {
     }
 
     @PostMapping
+    @Operation(description = "New customer")
     public ResponseEntity<HttpStatus> post(@RequestBody Customer customer) {
         try {
             service.save(customer);
@@ -31,6 +33,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Get customer by id")
     public ResponseEntity<EntityResponse<Customer>> get(@PathVariable Long id) {
         EntityResponse<Customer> response = service.getById(id);
         if (response.isEntityFound()) {
@@ -41,6 +44,7 @@ public class CustomerController {
     }
 
     @GetMapping("/all")
+    @Operation(description = "All Customers")
     public ResponseEntity<List<Customer>> getAll() {
         List<Customer> all = service.getAll();
 
@@ -48,6 +52,7 @@ public class CustomerController {
     }
 
     @PutMapping
+    @Operation(description = "Update Customers")
     public ResponseEntity<Customer> update(@RequestBody Customer customer) {
         Customer update = service.update(customer);
 
@@ -55,6 +60,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "Delete Customers")
     public ResponseEntity<?> deletePrice(@PathVariable("id") Long id) {
         service.delete(id);
 

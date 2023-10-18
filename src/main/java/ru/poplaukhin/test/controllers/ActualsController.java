@@ -1,5 +1,6 @@
 package ru.poplaukhin.test.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class ActualsController {
     }
 
     @GetMapping("/calculate")
+    @Operation(description = "Calculate column promo sign")
     public ResponseEntity<List<Actuals>> calculateColumnPromoSign() {
         List<Actuals> actuals = service.calcColumPromoSign();
 
@@ -31,6 +33,7 @@ public class ActualsController {
     }
 
     @GetMapping("/sales-with-promo")
+    @Operation(description = "Uploading sales facts promo")
     public ResponseEntity<List<Unloading>> uploadingSalesFactsPromo() {
         List<Unloading> actuals = service.uploadingSalesPromo();
 
@@ -38,6 +41,7 @@ public class ActualsController {
     }
 
     @GetMapping("/uploading-facts/{chainName}/{productCategoryName}")
+    @Operation(description = "Uploading facts")
     public ResponseEntity<List<List<Actuals>>> uploadingFacts(@PathVariable String chainName, // Customer
                                                           @PathVariable String productCategoryName) { // Product
 

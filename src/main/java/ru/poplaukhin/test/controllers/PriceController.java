@@ -1,5 +1,6 @@
 package ru.poplaukhin.test.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class PriceController {
     }
 
     @PostMapping
+    @Operation(description = "New price")
     public ResponseEntity<HttpStatus> post(@RequestBody Price price) {
         try {
             service.save(price);
@@ -32,6 +34,7 @@ public class PriceController {
     }
 
     @GetMapping("/{id}")
+    @Operation(description = "Get price")
     public ResponseEntity<EntityResponse<Price>> get(@PathVariable Long id) {
         EntityResponse<Price> response = service.getById(id);
         if (response.isEntityFound()) {
@@ -42,6 +45,7 @@ public class PriceController {
     }
 
     @GetMapping("/all")
+    @Operation(description = "Get all price")
     public ResponseEntity<List<Price>> getAll() {
         List<Price> all = service.getAll();
 
@@ -49,6 +53,7 @@ public class PriceController {
     }
 
     @PutMapping
+    @Operation(description = "Update price")
     public ResponseEntity<Price> update(@RequestBody Price price) {
 
         Price update = service.update(price);
@@ -57,6 +62,7 @@ public class PriceController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(description = "Delete price")
     public ResponseEntity<?> deletePrice(@PathVariable("id") Long id) {
         service.delete(id);
 
