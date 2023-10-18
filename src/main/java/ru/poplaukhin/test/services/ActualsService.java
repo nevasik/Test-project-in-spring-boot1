@@ -38,7 +38,7 @@ public class ActualsService {
 
         for (Actuals actual : actuals) {
             for (Price price : prices) {
-                if (actual.getProduct().equals(price.getMaterialNo())) {
+                if (actual.getProduct().equals(price.getProduct())) {
                     if ((actual.getActualSalesValue() / actual.getUnits()) > price.getRegularPricePerUnit()) {
                         log.info(String.valueOf(actual));
                         actual.setPromoSign("Promo");
@@ -137,12 +137,4 @@ public class ActualsService {
 
         return result;
     }
-
-//    public Optional<Customer> getCustomerByChainName(String chainName) {
-//        return customerRepository.findByChainName(chainName);
-//    }
-//
-//    public Optional<Product> getProductByCategoryName(String productCategoryName) {
-//        return productRepository.findByProductCategoryName(productCategoryName);
-//    }
 }

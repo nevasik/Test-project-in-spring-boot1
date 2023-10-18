@@ -2,13 +2,10 @@ package ru.poplaukhin.test.models;
 
 import jakarta.persistence.*;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-
 
 @Entity
 @Table(name = "price")
@@ -16,7 +13,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-
 public class Price {
     @Id
     @Column(name = "id")
@@ -25,9 +21,9 @@ public class Price {
     @Column(name = "chain_name")
     private String chainName;
 
+    @ManyToOne
     @JoinColumn(name = "material_no")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Product materialNo;
+    private Product product;
 
     @Column(name = "regular_price_per_unit")
     private double regularPricePerUnit;

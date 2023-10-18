@@ -9,13 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ru.poplaukhin.test.dto.Unloading;
 import ru.poplaukhin.test.models.Actuals;
-import ru.poplaukhin.test.models.Customer;
-import ru.poplaukhin.test.models.Price;
-import ru.poplaukhin.test.models.Product;
 import ru.poplaukhin.test.services.ActualsService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/actuals")

@@ -25,7 +25,7 @@ public class PriceService {
     }
 
     public void save(Price price) {
-        log.info("Successful finding " + price.getChainName() + " " + price.getMaterialNo() + " " + price.getRegularPricePerUnit());
+        log.info("Successful finding " + price.getChainName() + " " + price.getProduct() + " " + price.getRegularPricePerUnit());
         repository.save(price);
     }
 
